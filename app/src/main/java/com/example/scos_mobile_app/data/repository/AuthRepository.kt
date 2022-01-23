@@ -1,7 +1,7 @@
-package com.example.scos_mobile_app.repository
+package com.example.scos_mobile_app.data.repository
 
-import com.example.scos_mobile_app.network.AuthApi
-import com.example.scos_mobile_app.responses.LoginRequest
+import com.example.scos_mobile_app.data.network.AuthApi
+import com.example.scos_mobile_app.data.responses.LoginRequest
 
 class AuthRepository(
     private val api: AuthApi

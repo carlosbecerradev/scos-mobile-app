@@ -1,6 +1,6 @@
-package com.example.scos_mobile_app.repository
+package com.example.scos_mobile_app.data.repository
 
-import com.example.scos_mobile_app.network.Resource
+import com.example.scos_mobile_app.data.network.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException

@@ -4,18 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.scos_mobile_app.network.Resource
-import com.example.scos_mobile_app.repository.AuthRepository
-import com.example.scos_mobile_app.responses.LoginRequest
-import com.example.scos_mobile_app.responses.LoginResponse
+import com.example.scos_mobile_app.data.network.Resource
+import com.example.scos_mobile_app.data.repository.AuthRepository
 import kotlinx.coroutines.launch
 
 class AuthViewModel(
     private val repository: AuthRepository
 ) : ViewModel() {
 
-    private val _loginResponse : MutableLiveData<Resource<LoginResponse>> = MutableLiveData()
-    val loginResponse: LiveData<Resource<LoginResponse>>
+    private val _loginResponse : MutableLiveData<Resource<String>> = MutableLiveData()
+    val loginResponse: LiveData<Resource<String>>
         get()=_loginResponse
 
     fun login(

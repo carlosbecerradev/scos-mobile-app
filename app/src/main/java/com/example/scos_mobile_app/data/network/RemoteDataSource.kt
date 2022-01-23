@@ -1,10 +1,11 @@
-package com.example.scos_mobile_app.network
+package com.example.scos_mobile_app.data.network
 
 import com.example.scos_mobile_app.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 
 class RemoteDataSource {
     companion object {
@@ -25,6 +26,7 @@ class RemoteDataSource {
                     }
                 }.build()
             )
+            .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(api)

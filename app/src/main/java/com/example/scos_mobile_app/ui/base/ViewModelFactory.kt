@@ -2,8 +2,8 @@ package com.example.scos_mobile_app.ui.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.scos_mobile_app.repository.AuthRepository
-import com.example.scos_mobile_app.repository.BaseRepository
+import com.example.scos_mobile_app.data.repository.AuthRepository
+import com.example.scos_mobile_app.data.repository.BaseRepository
 import com.example.scos_mobile_app.ui.auth.AuthViewModel
 import java.lang.IllegalArgumentException
 

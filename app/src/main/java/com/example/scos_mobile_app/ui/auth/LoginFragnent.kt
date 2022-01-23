@@ -9,9 +9,9 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.example.scos_mobile_app.R
 import com.example.scos_mobile_app.databinding.FragmentLoginBinding
-import com.example.scos_mobile_app.network.AuthApi
-import com.example.scos_mobile_app.network.Resource
-import com.example.scos_mobile_app.repository.AuthRepository
+import com.example.scos_mobile_app.data.network.AuthApi
+import com.example.scos_mobile_app.data.network.Resource
+import com.example.scos_mobile_app.data.repository.AuthRepository
 import com.example.scos_mobile_app.ui.base.BaseFragment
 
 class LoginFragnent  : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRepository>() {
