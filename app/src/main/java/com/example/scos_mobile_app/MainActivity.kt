@@ -5,10 +5,13 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
 import com.example.scos_mobile_app.data.UserPreferences
 import com.example.scos_mobile_app.ui.auth.AuthActivity
+import com.example.scos_mobile_app.ui.cliente.ClienteActivity
 import com.example.scos_mobile_app.ui.startNewActivity
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
 
@@ -33,6 +36,10 @@ class MainActivity : AppCompatActivity() {
 
             if(timeToExpired < 60) {
                 startNewActivity(AuthActivity::class.java)
+            }
+
+            if(role.equals("CLIENTE")) {
+               startNewActivity(ClienteActivity::class.java)
             }
 
         })
