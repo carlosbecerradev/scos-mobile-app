@@ -8,6 +8,16 @@
     <fragment
         android:id="@+id/homeClienteFragment"
         android:name="com.example.scos_mobile_app.ui.cliente.HomeClienteFragment"
-        android:label="fragment_home_cliente"
+        android:label="Inicio"
         tools:layout="@layout/fragment_home_cliente" />
+    <fragment
+        android:id="@+id/nuevaOrdenFragment"
+        android:name="com.example.scos_mobile_app.ui.cliente.NuevaOrdenFragment"
+        android:label="Nueva Orden de Servicio"
+        tools:layout="@layout/fragment_nueva_orden" />
+    <fragment
+        android:id="@+id/encuestaFragment"
+        android:name="com.example.scos_mobile_app.ui.cliente.EncuestaFragment"
+        android:label="Encuesta de Atención"
+        tools:layout="@layout/fragment_encuesta" />
 </navigation>
