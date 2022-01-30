@@ -13,6 +13,13 @@
         android:theme="@style/Theme.Scosmobileapp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.home.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.home.HomeClienteActivity"
+            android:exported="false"
+            android:label="@string/title_activity_home_cliente" />
+        <activity
             android:name=".ui.auth.AuthActivity"
             android:exported="false" />
         <activity

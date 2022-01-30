@@ -4,8 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/layout/activity_auth.xml" value="0.19010416666666666" />
+        <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/layout/activity_home.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/layout/activity_home_cliente.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/layout/fragment_home.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/layout/fragment_login.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>
