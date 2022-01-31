@@ -47,6 +47,14 @@ class UserPreferences(
         get() = dataStore.data.map { preferences ->
             preferences[KEY_ROLE]
         }
+    val tipoDeServicioNombre: Flow<String?>
+        get() = dataStore.data.map { preferences ->
+            preferences[KEY_TIPO_DE_SERVICIO_NOMBRE]
+        }
+    val clienteId: Flow<String?>
+        get() = dataStore.data.map { preferences ->
+            preferences[KEY_CLIENTE_ID]
+        }
 
     suspend fun saveAuthToken(authToken: String) {
         var claims:String = ""
@@ -79,12 +87,26 @@ class UserPreferences(
         }
     }
 
+    suspend fun saveTipoDeServicioNombre(tipoDeServicioNombre: String) {
+        dataStore.edit { preferences ->
+            preferences[KEY_TIPO_DE_SERVICIO_NOMBRE] = tipoDeServicioNombre
+        }
+    }
+
+    suspend fun saveClienteId(clienteId: Long) {
+        dataStore.edit { preferences ->
+            preferences[KEY_CLIENTE_ID] = clienteId.toString()
+        }
+    }
+
     companion object {
         private val KEY_AUTH = preferencesKey<String>("key_auth")
         private val KEY_USERNAME = preferencesKey<String>("key_username")
         private val KEY_EXPIRATION = preferencesKey<String>("key_expiration")
         private val KEY_SEDE = preferencesKey<String>("key_sede")
         private val KEY_ROLE = preferencesKey<String>("key_role")
+        private val KEY_TIPO_DE_SERVICIO_NOMBRE = preferencesKey<String>("key_tipo_de_servicio_nombre")
+        private val KEY_CLIENTE_ID = preferencesKey<String>("key_cliente_id")
     }
 
     private fun decodeJWT(jwt: String) : String {

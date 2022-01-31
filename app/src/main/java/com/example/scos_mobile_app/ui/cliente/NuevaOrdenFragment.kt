@@ -1,60 +1,97 @@
 package com.example.scos_mobile_app.ui.cliente
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.scos_mobile_app.R
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.lifecycle.Observer
+import com.example.scos_mobile_app.data.network.NuevaOrdenApi
+import com.example.scos_mobile_app.data.network.Resource
+import com.example.scos_mobile_app.data.repository.NuevaOrdenRepository
+import com.example.scos_mobile_app.data.responses.ClienteX
+import com.example.scos_mobile_app.data.responses.OrdenDeServicio
+import com.example.scos_mobile_app.data.responses.TipoDeIncidenciaX
+import com.example.scos_mobile_app.databinding.FragmentNuevaOrdenBinding
+import com.example.scos_mobile_app.ui.base.BaseFragment
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
+import java.util.ArrayList
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [NuevaOrdenFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class NuevaOrdenFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class NuevaOrdenFragment : BaseFragment<NuevaOrdenViewModel, FragmentNuevaOrdenBinding, NuevaOrdenRepository>() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val spinner = binding.spinnerTiposDeIncidencia
+        var tiposDeIncidenciasIds = ArrayList<Int>()
+        var tiposDeIncidenciaNames = ArrayList<String>()
+        //---- Nueva Orden
+        var tipoDeIncidenciaId: Int = 0
+        var clienteId = runBlocking { userPreferences.clienteId.first() }
+        var tipoDeServicioNombre = runBlocking { userPreferences.tipoDeServicioNombre.first() }
+
+        if (tipoDeServicioNombre != null) {
+            viewModel.getTiposdDeIncidencia(tipoDeServicioNombre)
+        }
+        viewModel.tiposDeIncidencia.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is Resource.Success -> {
+                    Log.e("--//-->", it.value.toString())
+                    it.value.forEach {
+                        tiposDeIncidenciasIds.add(it.tipoDeIncidenciaId)
+                        tiposDeIncidenciaNames.add(it.nombre)
+                    }
+                    val adaptador = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, tiposDeIncidenciaNames)
+                    spinner.adapter = adaptador
+                }
+            }
+        })
+
+        spinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                tipoDeIncidenciaId = tiposDeIncidenciasIds.get(position)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
+
+        var clienteX = clienteId?.let { it1 -> ClienteX(it1.toInt()) }
+
+        binding.btnGenerarOrden.setOnClickListener {
+            var descripcion = binding.edtDescripcionIncidencia.text.toString()
+            var tipoDeIncidenciaX = TipoDeIncidenciaX(tipoDeIncidenciaId)
+            var nuevaOrden: OrdenDeServicio = OrdenDeServicio(clienteX,descripcion,
+                null, "CREADA", null, null,null,
+                null,null,null,null, null,
+                null,false, tipoDeIncidenciaX)
+            Log.i("btn -->", nuevaOrden.toString())
+            viewModel.createOrdenDeServicio(nuevaOrden)
+            // binding.btnGenerarOrden.isEnabled = false
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_nueva_orden, container, false)
+    override fun getViewModel(): Class<NuevaOrdenViewModel> = NuevaOrdenViewModel::class.java
+
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentNuevaOrdenBinding = FragmentNuevaOrdenBinding.inflate(inflater, container, false)
+
+    override fun getFragmentRepository(): NuevaOrdenRepository {
+        var token = runBlocking { userPreferences.authToken.first() }
+        var api = remoteDataSource.buildApi(NuevaOrdenApi::class.java, token)
+        return NuevaOrdenRepository(api)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment NuevaOrdenFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            NuevaOrdenFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

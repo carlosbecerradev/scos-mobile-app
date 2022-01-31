@@ -2,12 +2,11 @@ package com.example.scos_mobile_app.ui.cliente
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import com.example.scos_mobile_app.R
+import androidx.lifecycle.lifecycleScope
 import com.example.scos_mobile_app.data.network.ClienteApi
 import com.example.scos_mobile_app.data.network.Resource
 import com.example.scos_mobile_app.data.repository.ClienteRepository
@@ -15,6 +14,7 @@ import com.example.scos_mobile_app.data.responses.Cliente
 import com.example.scos_mobile_app.databinding.FragmentHomeClienteBinding
 import com.example.scos_mobile_app.ui.base.BaseFragment
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class HomeClienteFragment : BaseFragment<HomeClienteViewModel, FragmentHomeClienteBinding, ClienteRepository>() {
@@ -27,8 +27,13 @@ class HomeClienteFragment : BaseFragment<HomeClienteViewModel, FragmentHomeClien
         viewModel.cliente.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
-                    updateUI(it.value)
+                    var cliente: Cliente = it.value
+                    updateUI(cliente)
                     Log.e("--//-->", it.value.toString())
+                    lifecycleScope.launch {
+                        userPreferences.saveClienteId(cliente.id)
+                        userPreferences.saveTipoDeServicioNombre(cliente.tipoDeServicio)
+                    }
                 }
             }
         })
