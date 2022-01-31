@@ -15,4 +15,8 @@ class NuevaOrdenRepository(
         api.getTiposDeIncidencia(nombre)
     }
 
+    suspend fun getUltimaOrden(clienteId: Long) = safeApiCall {
+        api.getUltimaOrden(clienteId)
+    }
+
 }

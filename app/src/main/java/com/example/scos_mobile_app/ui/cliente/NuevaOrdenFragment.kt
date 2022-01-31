@@ -7,13 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.example.scos_mobile_app.data.network.NuevaOrdenApi
 import com.example.scos_mobile_app.data.network.Resource
 import com.example.scos_mobile_app.data.repository.NuevaOrdenRepository
 import com.example.scos_mobile_app.data.responses.ClienteX
 import com.example.scos_mobile_app.data.responses.OrdenDeServicio
+import com.example.scos_mobile_app.data.responses.OrdenDeServicioDto
 import com.example.scos_mobile_app.data.responses.TipoDeIncidenciaX
 import com.example.scos_mobile_app.databinding.FragmentNuevaOrdenBinding
 import com.example.scos_mobile_app.ui.base.BaseFragment
@@ -27,6 +27,7 @@ class NuevaOrdenFragment : BaseFragment<NuevaOrdenViewModel, FragmentNuevaOrdenB
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val spinner = binding.spinnerTiposDeIncidencia
+        iniciarUI()
         var tiposDeIncidenciasIds = ArrayList<Int>()
         var tiposDeIncidenciaNames = ArrayList<String>()
         //---- Nueva Orden
@@ -79,6 +80,33 @@ class NuevaOrdenFragment : BaseFragment<NuevaOrdenViewModel, FragmentNuevaOrdenB
             viewModel.createOrdenDeServicio(nuevaOrden)
             // binding.btnGenerarOrden.isEnabled = false
         }
+
+        if (clienteId != null) {
+            viewModel.getUltimaOrden(clienteId.toLong())
+        }
+
+        viewModel.ordenDeServicioDto.observe(viewLifecycleOwner, {
+            when (it) {
+                is Resource.Success -> {
+                    var orden: OrdenDeServicioDto = it.value
+                    if(orden.estado.equals("CERRADA") || orden.estado.equals("CANCELADA")) {
+                        iniciarUI()
+                    } else {
+                        binding.lyNuevaOrdenForm.visibility = View.GONE
+                        binding.lyNuevaOrdenMensaje.visibility = View.VISIBLE
+                        if(orden.estado.equals("RESUELTA")) {
+                            binding.tvNuevaOrdenMensaje.setText("Por favor, realice su encuesta de atención para generar una nueva orden de servicio")
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+    private fun iniciarUI() {
+        binding.lyNuevaOrdenForm.visibility = View.VISIBLE
+        binding.lyNuevaOrdenMensaje.visibility = View.GONE
+        binding.tvNuevaOrdenMensaje.setText("Ya tiene una orden de servicio en atención.")
     }
 
     override fun getViewModel(): Class<NuevaOrdenViewModel> = NuevaOrdenViewModel::class.java

@@ -1,6 +1,7 @@
 package com.example.scos_mobile_app.data.network
 
 import com.example.scos_mobile_app.data.responses.OrdenDeServicio
+import com.example.scos_mobile_app.data.responses.OrdenDeServicioDto
 import com.example.scos_mobile_app.data.responses.TipoDeIncidencia
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -19,5 +20,8 @@ interface NuevaOrdenApi {
     suspend fun getTiposDeIncidencia(
         @Path("nombre") nombre:String
     ): ArrayList<TipoDeIncidencia>
+
+    @GET("v1/orden-de-servicio/ultima/cliente/id/{clienteId}")
+    suspend fun getUltimaOrden(@Path("clienteId") clienteId: Long): OrdenDeServicioDto
 
 }

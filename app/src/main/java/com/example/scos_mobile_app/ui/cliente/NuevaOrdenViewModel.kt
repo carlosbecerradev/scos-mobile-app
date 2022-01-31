@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.scos_mobile_app.data.network.Resource
 import com.example.scos_mobile_app.data.repository.NuevaOrdenRepository
-import com.example.scos_mobile_app.data.responses.Cliente
 import com.example.scos_mobile_app.data.responses.OrdenDeServicio
+import com.example.scos_mobile_app.data.responses.OrdenDeServicioDto
 import com.example.scos_mobile_app.data.responses.TipoDeIncidencia
 import kotlinx.coroutines.launch
 
@@ -25,6 +25,14 @@ class NuevaOrdenViewModel(
 
     fun createOrdenDeServicio(ordenDeServicio: OrdenDeServicio) = viewModelScope.launch {
         repository.createOrden(ordenDeServicio)
+    }
+
+    private val _ordenDeServicioDto: MutableLiveData<Resource<OrdenDeServicioDto>> = MutableLiveData()
+    val ordenDeServicioDto: LiveData<Resource<OrdenDeServicioDto>>
+        get() = _ordenDeServicioDto
+
+    fun getUltimaOrden(clienteId: Long) = viewModelScope.launch {
+        _ordenDeServicioDto.value = repository.getUltimaOrden(clienteId)
     }
 
 }
