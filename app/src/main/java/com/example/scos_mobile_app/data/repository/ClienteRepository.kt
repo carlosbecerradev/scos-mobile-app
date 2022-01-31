@@ -9,4 +9,9 @@ class ClienteRepository(
     suspend fun getCliente(username: String) = safeApiCall {
         api.getCliente(username)
     }
+
+    suspend fun getUltimOrden(clienteId: Long) = safeApiCall {
+        api.getUltimOrden(clienteId)
+    }
+
 }
