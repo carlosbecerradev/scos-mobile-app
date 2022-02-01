@@ -55,6 +55,10 @@ class UserPreferences(
         get() = dataStore.data.map { preferences ->
             preferences[KEY_CLIENTE_ID]
         }
+    val tecnicoId: Flow<String?>
+        get() = dataStore.data.map { preferences ->
+            preferences[KEY_TECNICO_ID]
+        }
 
     suspend fun saveAuthToken(authToken: String) {
         var claims:String = ""
@@ -99,6 +103,12 @@ class UserPreferences(
         }
     }
 
+    suspend fun saveTecnicoId(tecnicoId: Long) {
+        dataStore.edit { preferences ->
+            preferences[KEY_TECNICO_ID] = tecnicoId.toString()
+        }
+    }
+
     companion object {
         private val KEY_AUTH = preferencesKey<String>("key_auth")
         private val KEY_USERNAME = preferencesKey<String>("key_username")
@@ -107,6 +117,7 @@ class UserPreferences(
         private val KEY_ROLE = preferencesKey<String>("key_role")
         private val KEY_TIPO_DE_SERVICIO_NOMBRE = preferencesKey<String>("key_tipo_de_servicio_nombre")
         private val KEY_CLIENTE_ID = preferencesKey<String>("key_cliente_id")
+        private val KEY_TECNICO_ID = preferencesKey<String>("key_tecnico_id")
     }
 
     private fun decodeJWT(jwt: String) : String {
