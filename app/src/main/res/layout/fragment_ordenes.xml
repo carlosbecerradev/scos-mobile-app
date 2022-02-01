@@ -6,9 +6,30 @@
     tools:context=".ui.tecnico.OrdenesFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
+        android:id="@+id/ly_ordenes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@color/purple_700"
+        android:paddingBottom="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp" >
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_ordenes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/txt_ordenes_mensaje"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="" />
 
 </FrameLayout>

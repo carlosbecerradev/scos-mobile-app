@@ -5,10 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scos_mobile_app.data.network.OrdenesApi
 import com.example.scos_mobile_app.data.network.Resource
 import com.example.scos_mobile_app.data.repository.OrdenesRepository
 import com.example.scos_mobile_app.databinding.FragmentOrdenesBinding
+import com.example.scos_mobile_app.ui.adaptador.AdaptadorOrdenDeServicioDto
 import com.example.scos_mobile_app.ui.base.BaseFragment
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -22,11 +24,16 @@ class OrdenesFragment : BaseFragment<OrdenesViewModel, FragmentOrdenesBinding, O
             viewModel.getOrdenesBySede(sede)
         }
 
+        binding.rvOrdenes.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+
         viewModel.ordenes.observe(viewLifecycleOwner, {
             when (it) {
                 is Resource.Success -> {
                     var ordenes = it.value
                     Log.i("-ordenes->", ordenes.toString())
+                    binding.rvOrdenes.adapter = AdaptadorOrdenDeServicioDto(ordenes)
                 }
             }
         })
