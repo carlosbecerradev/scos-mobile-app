@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Scosmobileapp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.tecnico.TecnicoActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.cliente.ClienteActivity"
             android:exported="false" />
         <activity

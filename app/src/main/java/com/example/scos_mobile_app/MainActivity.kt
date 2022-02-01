@@ -10,6 +10,7 @@ import com.example.scos_mobile_app.data.UserPreferences
 import com.example.scos_mobile_app.ui.auth.AuthActivity
 import com.example.scos_mobile_app.ui.cliente.ClienteActivity
 import com.example.scos_mobile_app.ui.startNewActivity
+import com.example.scos_mobile_app.ui.tecnico.TecnicoActivity
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -30,8 +31,9 @@ class MainActivity : AppCompatActivity() {
             Log.e("--------> Today: ", todayTime.toString())
             var timeToExpired = if(it == null) -1 else it.toLong() - todayTime
             Log.e("--------> Exp Seconds: ", timeToExpired.toString())
-            var role = runBlocking { userPreferences.role.first() }
+            val role = runBlocking { userPreferences.role.first() }
             val username = runBlocking { userPreferences.username.first() }
+            val sede = runBlocking { userPreferences.sede.first() }
             Log.e("--------> Role: ", role.toString())
             Log.e("--------> Username: ", username.toString())
 
@@ -41,6 +43,10 @@ class MainActivity : AppCompatActivity() {
 
             if(role.equals("CLIENTE")) {
                startNewActivity(ClienteActivity::class.java)
+            }
+
+            if(role.equals("TECNICO") || sede.equals("TECNICO")) {
+                startNewActivity(TecnicoActivity::class.java)
             }
 
         })

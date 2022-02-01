@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_tecnico"
+    app:startDestination="@id/homeTecnicoFragment">
+
+    <fragment
+        android:id="@+id/homeTecnicoFragment"
+        android:name="com.example.scos_mobile_app.ui.tecnico.HomeTecnicoFragment"
+        android:label="Inicio"
+        tools:layout="@layout/fragment_home_tecnico" />
+    <fragment
+        android:id="@+id/ordenesFragment"
+        android:name="com.example.scos_mobile_app.ui.tecnico.OrdenesFragment"
+        android:label="Nuevas Órdenes de Servicio"
+        tools:layout="@layout/fragment_ordenes" />
+</navigation>

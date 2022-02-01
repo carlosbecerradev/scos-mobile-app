@@ -9,16 +9,22 @@
         <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/layout/activity_home.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/layout/activity_home_cliente.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/layout/activity_tecnico.xml" value="0.20052083333333334" />
+        <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/layout/dialog_datos_tecnico.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/layout/fragment_custom_dialog.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/layout/fragment_dashboard.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/layout/fragment_encuesta.xml" value="0.264" />
         <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/layout/fragment_home.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/layout/fragment_home_cliente.xml" value="0.264" />
+        <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/layout/fragment_home_tecnico.xml" value="0.20052083333333334" />
         <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/layout/fragment_login.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/layout/fragment_notifications.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/layout/fragment_nueva_orden.xml" value="0.264" />
+        <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/layout/fragment_ordenes.xml" value="0.20052083333333334" />
         <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/menu/bottom_cliente_navigation.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/menu/bottom_menu_cliente_main.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/menu/bottom_tecnico_navigation.xml" value="0.20052083333333334" />
         <entry key="..\:/Users/nicto/AndroidStudioProjects/scos-mobile-app/app/src/main/res/menu/top_menu_user.xml" value="0.20416666666666666" />
       </map>
     </option>
