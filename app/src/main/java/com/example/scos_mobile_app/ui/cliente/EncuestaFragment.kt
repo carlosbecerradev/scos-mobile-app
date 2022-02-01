@@ -1,56 +1,88 @@
 package com.example.scos_mobile_app.ui.cliente
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.scos_mobile_app.R
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.example.scos_mobile_app.data.network.EncuestaApi
+import com.example.scos_mobile_app.data.network.Resource
+import com.example.scos_mobile_app.data.repository.EncuestaRepository
+import com.example.scos_mobile_app.data.responses.EncuestaDto
+import com.example.scos_mobile_app.data.responses.OrdenDeServicioDto
+import com.example.scos_mobile_app.databinding.FragmentEncuestaBinding
+import com.example.scos_mobile_app.ui.base.BaseFragment
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 
-/**
- * A simple [Fragment] subclass.
- * Use the [EncuestaFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class EncuestaFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class EncuestaFragment : BaseFragment<EncuestaViewModel, FragmentEncuestaBinding, EncuestaRepository>() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        iniciarUI()
+        var clienteId = runBlocking { userPreferences.clienteId.first() }
+        if (clienteId != null) {
+            viewModel.getUltimaOrden(clienteId.toLong())
         }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_encuesta, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment EncuestaFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic fun newInstance(param1: String, param2: String) =
-                EncuestaFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
+        var ordenId = 0
+        viewModel.ordenDeServicioDto.observe(viewLifecycleOwner, {
+            when (it) {
+                is Resource.Success -> {
+                    var orden: OrdenDeServicioDto = it.value
+                    ordenId = orden.id!!
+                    if(orden.estado.equals("RESUELTA")) {
+                        binding.lyEncuestaForm.visibility = View.VISIBLE
+                        binding.lyEncuestaMensaje.visibility = View.GONE
+                    } else {
+                        iniciarUI()
                     }
                 }
+            }
+        })
+
+        binding.btnEncuestaEnviar.setOnClickListener {
+            var valoracion = seleccionarValoracion()
+            var observacion = binding.edtEncuestaObservacion.text.toString()
+            var encuesta: EncuestaDto = EncuestaDto(null,null,observacion,false,ordenId,valoracion)
+            viewModel.createEncuesta(encuesta)
+            Log.i("-/Encuesta/->", encuesta.toString())
+            startActivity(Intent(requireContext(), ClienteActivity::class.java))
+        }
+
     }
+
+    private fun iniciarUI(){
+        binding.lyEncuestaForm.visibility = View.GONE
+        binding.lyEncuestaMensaje.visibility = View.VISIBLE
+        binding.tvEncuestaMensaje.setText("Su nueva orden de servicio debe estar marcada como RESUELTA para enviar una encuesta de atención")
+    }
+
+    private fun seleccionarValoracion(): String {
+        var valoracion:String = "CONFORME"
+        if(binding.rbEncuestaMala.isChecked) {
+            valoracion = "MALA"
+        }
+        if(binding.rbEncuestaConforme.isChecked) {
+            valoracion = "CONFORME"
+        }
+        if(binding.rbEncuestaExcelente.isChecked) {
+            valoracion = "EXCELENTE"
+        }
+        return valoracion
+    }
+
+    override fun getViewModel(): Class<EncuestaViewModel> = EncuestaViewModel::class.java
+
+    override fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentEncuestaBinding = FragmentEncuestaBinding.inflate(inflater, container, false)
+
+    override fun getFragmentRepository(): EncuestaRepository {
+        var token = runBlocking { userPreferences.authToken.first() }
+        var api = remoteDataSource.buildApi(EncuestaApi::class.java, token)
+        return EncuestaRepository(api)
+    }
+
 }
