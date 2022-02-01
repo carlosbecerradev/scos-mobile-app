@@ -89,7 +89,8 @@
             android:id="@+id/tv_nueva_orden_mensaje"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ya tiene una orden de servicio en atención." />
+            android:text="Ya tiene una orden de servicio en atención."
+            android:textSize="16sp" />
     </LinearLayout>
 
 </FrameLayout>

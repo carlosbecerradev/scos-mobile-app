@@ -1,5 +1,6 @@
 package com.example.scos_mobile_app.ui.cliente
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -78,7 +79,7 @@ class NuevaOrdenFragment : BaseFragment<NuevaOrdenViewModel, FragmentNuevaOrdenB
                 null,false, tipoDeIncidenciaX)
             Log.i("btn -->", nuevaOrden.toString())
             viewModel.createOrdenDeServicio(nuevaOrden)
-            // binding.btnGenerarOrden.isEnabled = false
+            startActivity(Intent(requireContext(), ClienteActivity::class.java))
         }
 
         if (clienteId != null) {
